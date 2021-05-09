@@ -1,0 +1,82 @@
+/*
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+*/
+
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode *head=NULL,*move=NULL,*back=NULL;
+        ListNode *p=l1;
+        ListNode *q=l2;
+        int carry=0;
+        while(p && q)
+        {
+            int sum=p->val+q->val+carry;
+            if(sum>=10){
+            move=new ListNode(sum%10);
+                carry=1;
+            }
+            else
+            {
+                move=new ListNode(sum);
+                carry=0;
+            }
+            if(back!=NULL)
+            back->next=move;
+            else
+                head=move;
+            
+            back=move;
+            p=p->next;
+            q=q->next;   
+        }
+        while(p)
+        {
+            if(carry==1){
+                if(p->val+1==10)
+                {move=new ListNode(0);
+                carry=1;
+                }
+                else
+                {
+                    move=new ListNode(p->val+1);
+                    carry=0;
+                }
+            }
+            else
+                move=new ListNode(p->val);
+            
+            back->next=move;
+            back=move;
+            p=p->next;
+        }
+         while(q)
+        {
+            if(carry==1){
+                if(q->val+1==10)
+                {move=new ListNode(0);
+                carry=1;
+                }
+                else
+                {
+                    move=new ListNode(q->val+1);
+                    carry=0;
+                }     
+            }
+            else
+                move=new ListNode(q->val);
+             
+            back->next=move;
+            back=move;
+             q=q->next;
+        }
+        if(carry==1)
+        {
+            move=new ListNode(1);
+            back->next=move;
+        }
+        return head;
+    }
+};
